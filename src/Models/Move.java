@@ -1,11 +1,11 @@
-package gameMechanics;
+package Models;
 
 public class Move {
 	private int colour;
 	private int x;
 	private int y;
 
-	public Move(int colour, int x, int y) {
+	public Move(int x, int y, int colour) {
 		this.colour = colour;
 		this.x = x;
 		this.y = y;

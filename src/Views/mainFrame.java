@@ -1,4 +1,4 @@
-package graphicals;
+package Views;
 
 import java.awt.BorderLayout;
 
@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
-import gameMechanics.GameRunner;
+import Controlers.GameRunner;
 
 @SuppressWarnings("serial")
 public class mainFrame extends JFrame {
