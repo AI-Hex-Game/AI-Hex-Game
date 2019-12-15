@@ -19,4 +19,4 @@ now you can test the game (using Eclipse or u can create an executable jar file)
 
 
 
-The project was developed by houdalat and Me(Mohamed Ech-Charay).
+This project was developed by houdalat and Me(Mohamed Ech-Charay).
