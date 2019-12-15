@@ -11,8 +11,10 @@ for more informations, please check the report in docs section.
 
 ## Pulling ##
 create a new directory where ever you want in your PC, open git bash and type the following lines:
-git init
-git pull https://github.com/AI-Hex-Game/AI-Hex-Game.git
+
+    git init
+    git pull https://github.com/AI-Hex-Game/AI-Hex-Game.git
+
 now you can test the game (using Eclipse or u can create an executable jar file), Enjoy playing!!
 
 
