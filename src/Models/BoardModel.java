@@ -29,6 +29,14 @@ public class BoardModel {
 		initAdjMatrix();
 	}
 
+	public BoardModel(int size, Node[][] graph, AdjMatrix redAdjMatrix, AdjMatrix blueAdjMatrix) {
+		this.size = size;
+		this.graph = graph;
+		this.redAdjMatrix = redAdjMatrix;
+		this.blueAdjMatrix = blueAdjMatrix;
+	}
+
+
 	private void initGraph() {
 		/*
 		 * initialize the graph board
@@ -98,9 +106,10 @@ public class BoardModel {
 			}
 		return neighbours;
 	}
-	
+
 
 	public void setNode(int x, int y, int value) {
+		int colour = graph[x][y].getNodeColour();
 		//note change in graph
 		graph[x][y].setNodeColour(value);
 		/*
@@ -116,6 +125,18 @@ public class BoardModel {
 			redAdjMatrix.bypassNode(nodeId);
 			blueAdjMatrix.removeNode(nodeId);
 			break;
+		case Node.BLANK:
+			switch(colour) {
+			case Node.RED:
+				redAdjMatrix.meetNode(nodeId, getBoardNeighbours(x, y));
+				blueAdjMatrix.keepNode(nodeId, getBoardNeighbours(x, y));
+				break;
+			case Node.BLUE:
+				blueAdjMatrix.meetNode(nodeId, getBoardNeighbours(x, y));
+				redAdjMatrix.keepNode(nodeId, getBoardNeighbours(x, y));
+				break;
+			}
+			break;
 		}
 	}
 
@@ -126,11 +147,11 @@ public class BoardModel {
 	public int getNodeOwner(int x, int y) {
 		return graph[x][y].getNodeColour();
 	}
-	
+
 	public Point getSelected() {
 		return selected;
 	}
-	
+
 	public void setSelected(Point selected) {
 		this.selected = selected;
 	}
@@ -138,7 +159,7 @@ public class BoardModel {
 	public void setSelected(int x, int y) {
 		this.setSelected(new Point(x,y));
 	}
-	
+
 	public boolean hasChanged() {
 		return changeOccured;
 	}
@@ -146,28 +167,55 @@ public class BoardModel {
 	public void changeNoted() {
 		this.changeOccured = false;
 	}
-	
+
 	public void changeOccured() {
 		this.changeOccured = true;
 	}
-	
-	
+
+
 	public boolean redWins() {
 		if (redAdjMatrix.read(RED_BORDER1_NODE, RED_BORDER2_NODE)==AdjMatrix.LINK)
 			return true;
 		return false;
 	}
-	
-	
+
+
 	public boolean blueWins() {
 		if (blueAdjMatrix.read(BLUE_BORDER1_NODE, BLUE_BORDER2_NODE)==AdjMatrix.LINK)
 			return true;
 		return false;
-		
+
 	}
-	
-	
+
+
 	public int getSize() {
 		return this.size;
+	}
+
+	//	public Node[][] cloneGraph(){
+	//		Node[][] graph = new Node[size][size];
+	//		for(int row = 0; row<size; row++)
+	//			for(int column = 0; column<size; column++)
+	//				graph[row][column] = this.graph[row][column];
+	//		return graph;
+	//	}
+
+	public BoardModel cloneBoard() {
+		Node[][] graphClone = new Node[size][size];
+		for (int i = 0; i < size; i++)
+			for (int j = 0; j < size; j++)
+				graphClone[i][j] = graph[i][j].clone();
+		return new BoardModel(size, graphClone, redAdjMatrix.clone(), blueAdjMatrix.clone());
+	}
+
+	public AdjMatrix getMatrix(int player) {
+		switch(player) {
+		case Node.BLUE:
+			return blueAdjMatrix;
+		case Node.RED:
+			return redAdjMatrix;
+		default:
+			return null;
+		}
 	}
 }

@@ -3,8 +3,8 @@ package Models;
 import java.awt.Point;
 
 public class Player {
-	private BoardModel board = null;
-	private int colour;
+	protected BoardModel board = null;
+	protected int colour;
 
 	public Player( BoardModel board, int colour) {
 		this.board = board;

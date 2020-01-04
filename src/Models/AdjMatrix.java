@@ -10,12 +10,16 @@ public class AdjMatrix {
 	 */
 	public static final int NO_LINK = 0;
 	public static final int LINK = 1;
-	
+
 	private Matrix data;
 
 	public AdjMatrix(int size) {
 		//remember to add the border nodes as well
 		this.data = new UpperSPDPackMatrix(size);
+	}
+
+	public AdjMatrix(Matrix adj) {
+		this.data = adj;
 	}
 
 	public void removeNode(int nodeId) {
@@ -57,5 +61,31 @@ public class AdjMatrix {
 
 	public int size() {
 		return data.numColumns();
+	}
+
+	public AdjMatrix multiplay(AdjMatrix mat) {
+		// both are assumed to be the same size
+		if (mat.size() == this.size()) {
+			AdjMatrix retMatrix = new AdjMatrix(size());
+			data.mult(mat.data, retMatrix.data);
+			return retMatrix;
+		} else
+			return null;
+	}
+
+	public AdjMatrix clone() {
+		return new AdjMatrix(data.copy());
+	}
+
+	public void meetNode(int node, ArrayList<Integer> boardNeighbours) {
+		for(int neighbour1 : boardNeighbours)
+			for(int neighbour2 : boardNeighbours)
+				write(neighbour1, neighbour2, NO_LINK);
+		keepNode(node, boardNeighbours);
+	}
+
+	public void keepNode(int node, ArrayList<Integer> boardNeighbours) {
+		for(int neighbour : boardNeighbours)
+			write(neighbour, node, LINK);
 	}
 }

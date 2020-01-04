@@ -16,7 +16,7 @@ import Models.BoardModel;
 import Models.Node;
 
 @SuppressWarnings("serial")
-public class BoardPanel extends JPanel implements MouseListener, Runnable {
+public class BoardPanel extends JPanel implements MouseListener/*, Runnable*/ {
 	private int size;
 	private double sm;
 	private double lg;
@@ -139,31 +139,31 @@ public class BoardPanel extends JPanel implements MouseListener, Runnable {
 	}
 	
 
-	public void run() {
-		// Just to be nice, lower this thread's priority
-		// so it can't interfere with other processing going on.
-		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-		// Remember the starting time.
-		long startTime = System.currentTimeMillis();
-		// This is the animation loop.
-		while (true/*We will try to implement a stop condition*/) {
-			// Advance the animation frame.
-			// Display it.
-			if (board.hasChanged()) {
-				repaint();
-				board.changeNoted();
-			}
-			// Delay depending on how far we are behind.
-			try {
-				startTime += 100;
-				Thread.sleep(Math.max(0, startTime - System.currentTimeMillis()));
-			} catch (InterruptedException e) {
-				System.out.println("Animation thread is interrupted");
-				break;
-			}
-		}
-
-	}
+//	public void run() {
+//		// Just to be nice, lower this thread's priority
+//		// so it can't interfere with other processing going on.
+//		Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+//		// Remember the starting time.
+//		long startTime = System.currentTimeMillis();
+//		// This is the animation loop.
+//		while (true/*We will try to implement a stop condition*/) {
+//			// Advance the animation frame.
+//			// Display it.
+//			if (board.hasChanged()) {
+//				repaint();
+//				board.changeNoted();
+//			}
+//			// Delay depending on how far we are behind.
+//			try {
+//				startTime += 100;
+//				Thread.sleep(Math.max(0, startTime - System.currentTimeMillis()));
+//			} catch (InterruptedException e) {
+//				System.out.println("Animation thread is interrupted");
+//				break;
+//			}
+//		}
+//
+//	}
 
 	
 	public void mouseClicked(MouseEvent e) {
@@ -194,7 +194,7 @@ public class BoardPanel extends JPanel implements MouseListener, Runnable {
 	}
 	
 
-	public void startAnimation() {
-		new Thread(this).start();
-	}
+//	public void startAnimation() {
+//		new Thread(this).start();
+//	}
 }
